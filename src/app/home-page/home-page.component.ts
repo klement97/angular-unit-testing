@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -8,10 +9,22 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
   counter = 0;
+  loginForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
+    this.loginForm = this.getInitialLoginForm();
+  }
+
+  getInitialLoginForm(): FormGroup {
+    return this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
   }
 
   increment() {

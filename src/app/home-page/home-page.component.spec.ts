@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomePageComponent} from './home-page.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 describe('HomePageComponent', () => {
@@ -9,9 +10,10 @@ describe('HomePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, FormsModule],
       declarations: [HomePageComponent]
     })
-           .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -38,5 +40,13 @@ describe('HomePageComponent', () => {
     component.decrement();
     expect(component.counter).toBeLessThan(incrementedCounter);
     expect(component.counter).toBe(incrementedCounter - 1);
+  });
+
+  it('should initialize login form', () => {
+    expect(component.loginForm).toBeTruthy();
+    expect(component.loginForm.invalid).toBeTruthy();
+    expect(component.loginForm.value).toEqual({email: '', password: ''});
+    expect(component.loginForm.get('email').errors.required).not.toBeUndefined();
+    expect(component.loginForm.get('password').errors.required).not.toBeUndefined();
   });
 });
