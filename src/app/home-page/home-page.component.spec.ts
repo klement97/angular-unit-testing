@@ -3,11 +3,15 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomePageComponent} from './home-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
+import {newEvent} from '../testing.utils';
 
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
   let fixture: ComponentFixture<HomePageComponent>;
+  let debugElement: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,6 +22,7 @@ describe('HomePageComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomePageComponent);
+    debugElement = fixture.debugElement;
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -47,11 +52,22 @@ describe('HomePageComponent', () => {
     expect(component.loginForm).toBeTruthy();
     expect(component.loginForm.invalid).toBeTruthy();
     expect(component.loginForm.value).toEqual({email: '', password: ''});
-    expect(component.loginForm.get('email').errors.required).not.toBeUndefined();
-    expect(component.loginForm.get('password').errors.required).not.toBeUndefined();
+    expect(component.loginForm.get('email').errors.required).toBeDefined();
+    expect(component.loginForm.get('password').errors.required).toBeDefined();
   });
 
-  // it('should not make request to login when invalid', () => {
-  // expect(component.loginForm)
-  // });
+  it('should not make request to login when invalid', () => {
+    const button = debugElement.query(By.css('button')).nativeElement;
+    expect(button.textContent).toEqual('LOGIN');
+  });
+
+  it('should remove required error from email after typing', () => {
+    const emailInput: HTMLInputElement = debugElement.query(By.css('#email')).nativeElement;
+    emailInput.value = 'notCorrectEmail';
+    emailInput.dispatchEvent(newEvent('input'));
+    fixture.detectChanges();
+
+    const emailControl = component.loginForm.get('email');
+    expect(emailControl.errors.required).toBeUndefined();
+  });
 });
