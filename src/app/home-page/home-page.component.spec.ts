@@ -12,8 +12,7 @@ describe('HomePageComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule],
       declarations: [HomePageComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -49,4 +48,8 @@ describe('HomePageComponent', () => {
     expect(component.loginForm.get('email').errors.required).not.toBeUndefined();
     expect(component.loginForm.get('password').errors.required).not.toBeUndefined();
   });
+
+  // it('should not make request to login when invalid', () => {
+  // expect(component.loginForm)
+  // });
 });
