@@ -2,6 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomePageComponent} from './home-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 
 describe('HomePageComponent', () => {
@@ -10,7 +11,7 @@ describe('HomePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule],
+      imports: [ReactiveFormsModule, FormsModule, HttpClientModule],
       declarations: [HomePageComponent]
     }).compileComponents();
   }));
@@ -27,6 +28,7 @@ describe('HomePageComponent', () => {
 
   it('should have an initial value', () => {
     expect(component.counter).toBe(0);
+    expect(component.errorMessage).toBe('');
   });
 
   it('should increment/decrement the counter', () => {

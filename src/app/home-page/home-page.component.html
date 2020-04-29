@@ -1,1 +1,19 @@
 <p>home-page works!</p>
+
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div>
+        <p>{{errorMessage}}</p>
+    </div>
+
+    <label>
+        Email
+        <input type="email" required formControlName="email" min="3" max="300">
+    </label>
+
+    <label>
+        Password
+        <input type="password" required formControlName="password">
+    </label>
+
+    <button type="submit">LOGIN</button>
+</form>
