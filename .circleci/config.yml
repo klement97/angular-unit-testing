@@ -15,5 +15,3 @@ jobs:
             - "node_modules"
       - run: npm run test -- --no-watch --no-progress
       - run: npm run e2e -- --protractor-config=e2e/protractor.conf.js
-      - store_test_results:
-          path: test-results
